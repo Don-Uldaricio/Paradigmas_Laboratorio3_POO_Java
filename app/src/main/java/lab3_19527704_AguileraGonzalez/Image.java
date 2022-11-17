@@ -65,4 +65,35 @@ public class Image {
         this.compressedPixels = compressedPixels;
     }
     
+    public boolean isBitmap() {
+        for(int i = 0; i < width * height; i++) {
+            if (!(pixlist.get(i) instanceof Pixbit)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean isPixmap() {
+        for(int i = 0; i < width * height; i++) {
+            if (!(pixlist.get(i) instanceof Pixrgb)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean isHexmap() {
+        for(int i = 0; i < width * height; i++) {
+            if (!(pixlist.get(i) instanceof Pixhex)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean isCompressed() {
+        return compressValue;
+    }
+    
 }

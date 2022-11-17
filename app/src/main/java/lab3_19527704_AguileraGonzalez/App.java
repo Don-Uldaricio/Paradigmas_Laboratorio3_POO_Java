@@ -23,16 +23,17 @@ public class App {
         Image img1 = new Image(2,2,pixlist);
         
         for(int i=0; i<img1.getPixlist().size();i++) {
-            System.out.println("Datos pixel n" + String.valueOf(i+1) + ":");
-            System.out.println("PosX: " + String.valueOf(img1.getPixlist().get(i).getPosX()));
-            System.out.println("PosY: " + String.valueOf(img1.getPixlist().get(i).getPosY()));
+            System.out.println("Datos pixel n" + (i+1) + ":");
+            System.out.println("PosX: " + img1.getPixlist().get(i).getPosX());
+            System.out.println("PosY: " + img1.getPixlist().get(i).getPosY());
             System.out.println(((Pixbit)img1.getPixlist().get(i)).getBitColor());
-            System.out.println("Depth: " + String.valueOf(img1.getPixlist().get(i).getDepth()));
+            System.out.println("Depth: " + img1.getPixlist().get(i).getDepth());
             System.out.println("\n");
         }
         
-        //System.out.println("isBitmap? " + String.valueOf(img1.isBitmap()));
-        //System.out.println("isBitmap? " + String.valueOf(img1.isPixmap()));
-        //System.out.println("isBitmap? " + String.valueOf(img1.isHexmap()));
+        System.out.println("isBitmap? " + img1.isBitmap());
+        System.out.println("isBitmap? " + img1.isPixmap());
+        System.out.println("isBitmap? " + img1.isHexmap());
+        System.out.println("isCompressed? " + img1.isCompressed());
     }
 }
