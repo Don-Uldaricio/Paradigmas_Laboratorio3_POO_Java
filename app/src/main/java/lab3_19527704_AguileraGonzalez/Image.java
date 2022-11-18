@@ -96,4 +96,20 @@ public class Image {
         return compressValue;
     }
     
+    public void flipH() {
+        if (! isCompressed()) {
+            for (int i = 0; i < width * height; i++) {
+                pixlist.get(i).setPosX(width - pixlist.get(i).getPosX() - 1);
+            }
+        }
+    }
+    
+    public void flipV() {
+        if (! isCompressed()) {
+            for (int i = 0; i < width * height; i++) {
+                pixlist.get(i).setPosY(width - pixlist.get(i).getPosY() - 1);
+            }
+        }
+    }
+    
 }
