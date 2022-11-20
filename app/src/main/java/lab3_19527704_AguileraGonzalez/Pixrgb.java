@@ -51,4 +51,8 @@ public class Pixrgb extends Pixel {
         }
     }
     
+    public String rgbToHex() {
+        return String.format("#%02X%02X%02X", rgbColor[0], rgbColor[1], rgbColor[2]);
+    }
+    
 }

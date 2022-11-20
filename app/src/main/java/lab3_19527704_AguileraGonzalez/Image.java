@@ -112,4 +112,49 @@ public class Image {
         }
     }
     
+    public void crop(int x1, int y1, int x2, int y2) {
+        if (! isCompressed()) {
+            int i = 0;
+            if (x1 >= 0 && x2 <= (width - 1) &&
+                y1 >= 0 && y2 <= (height - 1) &&
+                x1 <= x2 && y1 <= y2) {
+                while(pixlist.size() != (x2 - x1 + 1)*(y2 - y1 + 1))  {
+                    if (pixlist.get(i).getPosX() >= x1 &&
+                        pixlist.get(i).getPosX() <= x2 &&
+                        pixlist.get(i).getPosY() >= y1 &&
+                        pixlist.get(i).getPosY() <= y2) {
+                        pixlist.get(i).setPosX(pixlist.get(i).getPosX() - x1);
+                        pixlist.get(i).setPosY(pixlist.get(i).getPosY() - y1);
+                        i++;
+                    }
+                    
+                    else {
+                        pixlist.remove(i);
+                    }
+                }
+                width = x2 - x1 + 1;
+                height = y2 - y1 + 1;
+            }
+        }
+    }
+    
+    public Image imgRGBToHex() {
+        if (! isCompressed()) {
+            if (isPixmap()) {
+                Image img2;
+                Pixhex phex;
+                String hexColor;
+                ArrayList<Pixel> pixlist2 = new ArrayList<>();
+                for (Pixel p: pixlist) {
+                    hexColor = ((Pixrgb)p).rgbToHex();
+                    phex = new Pixhex(p.getPosX(),p.getPosY(),hexColor,p.getDepth());
+                    pixlist2.add(phex);
+                }
+                img2 = new Hexmap(width,height,pixlist2);                
+                return img2;
+            }
+        }
+        return (null);
+    }
+    
 }
