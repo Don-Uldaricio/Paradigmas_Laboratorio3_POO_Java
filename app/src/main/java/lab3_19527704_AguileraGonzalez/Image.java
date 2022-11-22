@@ -219,7 +219,6 @@ public class Image {
         return null;
     }
     
-    
     public void rotate90() {
         int aux;
         for (Pixel p: pixlist) {
@@ -230,6 +229,94 @@ public class Image {
         aux = width;
         width = height;
         height = aux;
+    }
+    
+    public void compress() {
+        if (!isCompressed()) {
+            int c = 0;
+            int j = 0;
+            if (isBitmap()) {
+                int maxColor = ((BitHistogram)histogram()).getMaxBitColor();
+                for (Pixel p: pixlist) {
+                    if (((Pixbit)p).getBitColor() == maxColor) {
+                        c++;
+                    }
+                }
+                int finalLenght = pixlist.size() - c;
+                while (pixlist.size() != finalLenght) {
+                    Pixel auxP = pixlist.get(j);
+                    if (((Pixbit)auxP).getBitColor() == maxColor) {
+                        compressedPixels.add(new ArrayList<>(Arrays.asList(auxP.getPosX(),auxP.getPosY(),auxP.getDepth())));
+                        pixlist.remove(j);
+                    }
+                    else {
+                        j++;
+                    }
+                }
+                compressValue = true;
+            }
+            
+            else if (isPixmap()) {
+                int[] maxColor = ((RgbHistogram)histogram()).getMaxRgbColor();
+                for (Pixel p: pixlist) {
+                    if (((Pixrgb)p).getRgbColor()[0] == maxColor[0] &&
+                        ((Pixrgb)p).getRgbColor()[1] == maxColor[1] &&
+                        ((Pixrgb)p).getRgbColor()[2] == maxColor[2]) {
+                        c++;
+                    }
+                }
+                int finalLenght = pixlist.size() - c;
+                while (pixlist.size() != finalLenght) {
+                    Pixel auxP = pixlist.get(j);
+                    if (((Pixrgb)auxP).getRgbColor()[0] == maxColor[0] &&
+                        ((Pixrgb)auxP).getRgbColor()[1] == maxColor[1] &&
+                        ((Pixrgb)auxP).getRgbColor()[2] == maxColor[2]) {
+                        compressedPixels.add(new ArrayList<>(Arrays.asList(auxP.getPosX(),auxP.getPosY(),auxP.getDepth())));
+                        pixlist.remove(j);
+                    }
+                    else {
+                        j++;
+                    }
+                }
+                compressValue = true;
+            }
+            
+            else if (isHexmap()) {
+                String maxColor = ((HexHistogram)histogram()).getMaxHexColor();
+                for (Pixel p: pixlist) {
+                    if (((Pixhex)p).getHexColor().equals(maxColor)) {
+                        c++;
+                    }
+                }
+                int finalLenght = pixlist.size() - c;
+                while (pixlist.size() != finalLenght) {
+                    Pixel auxP = pixlist.get(j);
+                    if (((Pixhex)auxP).getHexColor().equals(maxColor)) {
+                        compressedPixels.add(new ArrayList<>(Arrays.asList(auxP.getPosX(),auxP.getPosY(),auxP.getDepth())));
+                        pixlist.remove(j);
+                    }
+                    else {
+                        j++;
+                    }
+                }
+                compressValue = true;
+            }
+        }
+    }
+    
+    public void changePixel(Pixel p) {
+        if (!isCompressed()) {
+            if ((p instanceof Pixbit && isBitmap()) ||
+                (p instanceof Pixrgb && isPixmap()) ||
+                (p instanceof Pixhex && isHexmap())) {
+                for (Pixel auxP: pixlist) {
+                    if (auxP.getPosX() == p.getPosX() &&
+                        auxP.getPosY() == p.getPosY()) {
+                        auxP = p;
+                    }
+                }
+            }
+        }
     }
     
 }
