@@ -1,6 +1,9 @@
 package lab3_19527704_AguileraGonzalez;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Image {
     
@@ -8,27 +11,33 @@ public class Image {
     int height;
     boolean compressValue;
     ArrayList<Pixel> pixlist;
-    ArrayList<Integer> compressedPixels;
+    ArrayList<ArrayList<Integer>> compressedPixels;
 
     public Image() {
         compressValue = false;
+        compressedPixels = new ArrayList<>();
     }
-    
+
     public Image(int width, int height, ArrayList<Pixel> pixlist) {
         this.width = width;
         this.height = height;
         this.pixlist = pixlist;
         compressValue = false;
+        compressedPixels = new ArrayList<>();
     }
-
+    
+    Comparator<Pixel> compareByPosX = (Pixel p1, Pixel p2) -> 
+        Integer.compare(p1.getPosX(), p2.getPosX());
+        
+    Comparator<Pixel> compareByPosY = (Pixel p3, Pixel p4) -> 
+        Integer.compare(p3.getPosY(), p4.getPosY());
+    
     public int getWidth() {
         return width;
     }
 
     public void setWidth(int width) {
-        if (width >= 0) {
-            this.width = width;
-        }
+        this.width = width;
     }
 
     public int getHeight() {
@@ -36,17 +45,7 @@ public class Image {
     }
 
     public void setHeight(int height) {
-        if (height >= 0) {
-            this.height = height;
-        }
-    }
-
-    public boolean isCompressValue() {
-        return compressValue;
-    }
-
-    public void setCompressValue(boolean compressValue) {
-        this.compressValue = compressValue;
+        this.height = height;
     }
 
     public ArrayList<Pixel> getPixlist() {
@@ -57,11 +56,11 @@ public class Image {
         this.pixlist = pixlist;
     }
 
-    public ArrayList<Integer> getCompressedPixels() {
+    public ArrayList<ArrayList<Integer>> getCompressedPixels() {
         return compressedPixels;
     }
 
-    public void setCompressedPixels(ArrayList<Integer> compressedPixels) {
+    public void setCompressedPixels(ArrayList<ArrayList<Integer>> compressedPixels) {
         this.compressedPixels = compressedPixels;
     }
     
@@ -98,16 +97,16 @@ public class Image {
     
     public void flipH() {
         if (! isCompressed()) {
-            for (int i = 0; i < width * height; i++) {
-                pixlist.get(i).setPosX(width - pixlist.get(i).getPosX() - 1);
+            for (Pixel p: pixlist) {
+                p.setPosX(width - p.getPosX() - 1);
             }
         }
     }
     
     public void flipV() {
         if (! isCompressed()) {
-            for (int i = 0; i < width * height; i++) {
-                pixlist.get(i).setPosY(width - pixlist.get(i).getPosY() - 1);
+            for (Pixel p: pixlist) {
+                p.setPosY(height - p.getPosY() - 1);
             }
         }
     }
@@ -142,19 +141,95 @@ public class Image {
         if (! isCompressed()) {
             if (isPixmap()) {
                 Image img2;
-                Pixhex phex;
-                String hexColor;
                 ArrayList<Pixel> pixlist2 = new ArrayList<>();
                 for (Pixel p: pixlist) {
-                    hexColor = ((Pixrgb)p).rgbToHex();
-                    phex = new Pixhex(p.getPosX(),p.getPosY(),hexColor,p.getDepth());
-                    pixlist2.add(phex);
+                    pixlist2.add(new Pixhex(p.getPosX(),p.getPosY(), 
+                            ((Pixrgb)p).rgbToHex(),p.getDepth()));
                 }
                 img2 = new Hexmap(width,height,pixlist2);                
                 return img2;
             }
         }
-        return (null);
+        return null;
+    }
+    
+    public Histogram histogram() {
+        if (! isCompressed()) {
+            Histogram h;
+            ArrayList<Integer> freqList = new ArrayList<>();
+            int c;
+            
+            if (isBitmap()) {
+                ArrayList<Integer> bitColorList = new ArrayList<>();
+                bitColorList.add(0);
+                bitColorList.add(1);               
+                for (int color: bitColorList) {
+                    c = 0;
+                    for (Pixel p: pixlist) {
+                        if (color == ((Pixbit)p).getBitColor()) {
+                            c++;
+                        }
+                    }
+                    freqList.add(c);                    
+                }
+                h = new BitHistogram(bitColorList, freqList);
+                return h;
+            }
+            
+            else if (isPixmap()) {
+                ArrayList<int[]> rgbColorList = new ArrayList<>();
+                for (Pixel p: pixlist) {
+                    if (!rgbColorList.contains(((Pixrgb)p).getRgbColor())) {
+                        rgbColorList.add(((Pixrgb)p).getRgbColor());
+                    }
+                }
+                for (int[] color: rgbColorList) {
+                    c = 0;
+                    for (Pixel p: pixlist) {
+                        if (color == ((Pixrgb)p).getRgbColor()) {
+                            c++;
+                        }
+                    }
+                    freqList.add(c); 
+                }
+                h = new RgbHistogram(rgbColorList, freqList);
+                return h;
+            }
+            
+            else if (isHexmap()) {
+                ArrayList<String> hexColorList = new ArrayList<>();
+                for (Pixel p: pixlist) {
+                    if (!hexColorList.contains(((Pixhex)p).getHexColor())) {
+                        hexColorList.add(((Pixhex)p).getHexColor());
+                    }
+                }
+                for (String color: hexColorList) {
+                    c = 0;
+                    for (Pixel p: pixlist) {
+                        if (color.equals(((Pixhex)p).getHexColor())) {
+                            c++;
+                        }
+                    }
+                    freqList.add(c); 
+                }
+                h = new HexHistogram(hexColorList, freqList);
+                return h;
+            }
+        }
+        return null;
+    }
+    
+    
+    public void rotate90() {
+        int aux;
+        for (Pixel p: pixlist) {
+            aux = p.getPosX();
+            p.setPosX(height - 1 - p.getPosY());
+            p.setPosY(aux);
+        }
+        aux = width;
+        width = height;
+        height = aux;
     }
     
 }

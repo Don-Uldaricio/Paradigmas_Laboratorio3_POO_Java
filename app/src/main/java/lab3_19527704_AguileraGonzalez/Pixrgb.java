@@ -7,18 +7,21 @@ public class Pixrgb extends Pixel {
     public Pixrgb() {
         this.rgbColor = new int[3];
     }
-
-    public Pixrgb(int posX, int posY, int[] rgbColor, int depth) {
+    
+    public Pixrgb(int posX, int posY, int R, int G, int B, int depth) {
         super(posX, posY, depth);
-        if (rgbColor[0] >= 0 && rgbColor[0] <= 255 &&
-            rgbColor[1] >= 0 && rgbColor[1] <= 255 &&
-            rgbColor[2] >= 0 && rgbColor[2] <= 255 ) {
-            this.rgbColor = rgbColor;
-        }
+        this.rgbColor = new int[3];
+        this.rgbColor[0] = R;
+        this.rgbColor[1] = G;
+        this.rgbColor[2] = B;
     }
 
     public int[] getRgbColor() {
         return rgbColor;
+    }
+
+    public void setRgbColor(int[] rgbColor) {
+        this.rgbColor = rgbColor;
     }
     
     public int getRColor() {
@@ -26,9 +29,7 @@ public class Pixrgb extends Pixel {
     }
     
     public void setRColor(int redColor) {
-        if (redColor >= 0 && redColor <= 255) {
-            rgbColor[0] = redColor;
-        }
+        this.rgbColor[0] = redColor;
     }
     
     public int getGColor() {
@@ -36,9 +37,7 @@ public class Pixrgb extends Pixel {
     }
     
     public void setGColor(int greenColor) {
-        if (greenColor >= 0 && greenColor <= 255) {
-            rgbColor[1] = greenColor;
-        }
+        this.rgbColor[1] = greenColor;
     }
     
     public int getBColor() {
@@ -46,9 +45,13 @@ public class Pixrgb extends Pixel {
     }
     
     public void setBColor(int blueColor) {
-        if (blueColor >= 0 && blueColor <= 255) {
-            rgbColor[2] = blueColor;
-        }
+        this.rgbColor[2] = blueColor;
+    }
+    
+    public boolean isPixrgb() {
+        return (rgbColor[0] >= 0 && rgbColor[0] <= 255 &&
+                rgbColor[1] >= 0 && rgbColor[1] <= 255 &&
+                rgbColor[2] >= 0 && rgbColor[2] <= 255);
     }
     
     public String rgbToHex() {
@@ -56,3 +59,4 @@ public class Pixrgb extends Pixel {
     }
     
 }
+
