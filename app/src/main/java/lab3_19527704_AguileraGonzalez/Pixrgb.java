@@ -4,10 +4,6 @@ public class Pixrgb extends Pixel {
     
     int[] rgbColor;
 
-    public Pixrgb() {
-        this.rgbColor = new int[3];
-    }
-    
     public Pixrgb(int posX, int posY, int R, int G, int B, int depth) {
         super(posX, posY, depth);
         this.rgbColor = new int[3];

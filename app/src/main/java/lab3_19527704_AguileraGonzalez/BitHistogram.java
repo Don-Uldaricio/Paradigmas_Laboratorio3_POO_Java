@@ -6,9 +6,6 @@ public class BitHistogram extends Histogram {
 
     ArrayList<Integer> bitColorList;
 
-    public BitHistogram() {
-    }
-
     public BitHistogram(ArrayList<Integer> bitColorList, ArrayList<Integer> freqList) {
         super(freqList);
         this.bitColorList = bitColorList;

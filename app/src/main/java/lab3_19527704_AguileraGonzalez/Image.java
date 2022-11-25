@@ -13,11 +13,11 @@ public class Image {
     ArrayList<Pixel> pixlist;
     ArrayList<ArrayList<Integer>> compressedPixels;
 
-    public Image() {
+    public Image(){
         compressValue = false;
         compressedPixels = new ArrayList<>();
     }
-
+    
     public Image(int width, int height, ArrayList<Pixel> pixlist) {
         this.width = width;
         this.height = height;
@@ -25,12 +25,6 @@ public class Image {
         compressValue = false;
         compressedPixels = new ArrayList<>();
     }
-    
-    Comparator<Pixel> compareByPosX = (Pixel p1, Pixel p2) -> 
-        Integer.compare(p1.getPosX(), p2.getPosX());
-        
-    Comparator<Pixel> compareByPosY = (Pixel p3, Pixel p4) -> 
-        Integer.compare(p3.getPosY(), p4.getPosY());
     
     public int getWidth() {
         return width;
@@ -50,18 +44,6 @@ public class Image {
 
     public ArrayList<Pixel> getPixlist() {
         return pixlist;
-    }
-
-    public void setPixlist(ArrayList<Pixel> pixlist) {
-        this.pixlist = pixlist;
-    }
-
-    public ArrayList<ArrayList<Integer>> getCompressedPixels() {
-        return compressedPixels;
-    }
-
-    public void setCompressedPixels(ArrayList<ArrayList<Integer>> compressedPixels) {
-        this.compressedPixels = compressedPixels;
     }
     
     public boolean isBitmap() {
@@ -317,6 +299,175 @@ public class Image {
                 }
             }
         }
+    }
+    
+    public void invertColorBit() {
+        if (!isCompressed()) {
+            if (isBitmap()) {
+                for (Pixel p: pixlist) {
+                    if (((Pixbit)p).getBitColor() == 0) {
+                        ((Pixbit)p).setBitColor(1);
+                    }
+                    else {
+                        ((Pixbit)p).setBitColor(0);
+                    }
+                }
+            }
+        }
+    }
+    
+    public void invertColorRGB() {
+        if (!isCompressed()) {
+            if (isPixmap()) {
+                int newR, newG, newB;
+                for (Pixel p: pixlist) {
+                    newR = 255 - ((Pixrgb)p).getRColor();
+                    newG = 255 - ((Pixrgb)p).getGColor();
+                    newB = 255 - ((Pixrgb)p).getBColor();
+                    ((Pixrgb)p).setRColor(newR);
+                    ((Pixrgb)p).setGColor(newG);
+                    ((Pixrgb)p).setBColor(newB);
+                }
+            }
+        }
+    }
+        
+    Comparator<Pixel> compareByPosX = (Pixel p1, Pixel p2) -> 
+        Integer.compare(p1.getPosX(), p2.getPosX());
+        
+    Comparator<Pixel> compareByPosY = (Pixel p1, Pixel p2) -> 
+        Integer.compare(p1.getPosY(), p2.getPosY());
+    
+    public void sortPixlist() {
+        Collections.sort(pixlist, compareByPosX);
+        Collections.sort(pixlist, compareByPosY);
+    }
+    
+    public String imageToString() {
+        if (!isCompressed()) {
+            String imageString = "";
+            sortPixlist();
+            if (isBitmap()) {
+                for (Pixel p: pixlist) {
+                    Integer aux = ((Pixbit)p).getBitColor();
+                    if (p.getPosX() == width - 1) {
+                        imageString = imageString.concat(aux.toString() + "\n"); 
+                    }
+                    else {
+                        imageString = imageString.concat(aux.toString() + " ");
+                    }
+                }
+                return imageString;
+            }
+            
+            else if (isPixmap()) {
+                for (Pixel p: pixlist) {
+                    int[] aux = ((Pixrgb)p).getRgbColor();
+                    if (p.getPosX() == width - 1) {
+                        imageString = imageString.concat("[" + 
+                                ((Integer)aux[0]).toString() + "," + 
+                                ((Integer)aux[1]).toString() + "," +
+                                ((Integer)aux[2]).toString() + "]" + "\n");
+                    }
+                    else {
+                        imageString = imageString.concat("[" + 
+                                ((Integer)aux[0]).toString() + "," + 
+                                ((Integer)aux[1]).toString() + "," +
+                                ((Integer)aux[2]).toString() + "]" + " ");
+                    }
+                }
+                return imageString;
+            }
+            
+            else if (isHexmap()) {
+                for (Pixel p: pixlist) {
+                    String aux = ((Pixhex)p).getHexColor();
+                    if (p.getPosX() == width - 1) {
+                        imageString = imageString.concat(aux + "\n");
+                    }
+                    else {
+                        imageString = imageString.concat(aux + " ");
+                    }
+                }
+                return imageString;
+            }
+        }
+        return null;
+    }
+    
+    public ArrayList<Image> depthLayers() {
+        if (!isCompressed()) {
+            ArrayList<Image> imageList = new ArrayList<>();
+            ArrayList<Integer> depthList = new ArrayList<>();
+            ArrayList<Pixel> auxPixlist = new ArrayList<>();
+            if (isBitmap()) {
+                for (Pixel p: pixlist) {
+                    if (!depthList.contains(p.getDepth())) {
+                        depthList.add(p.getDepth());
+                    }
+                }
+                for (int d: depthList) {
+                    for (Pixel p: pixlist) {
+                        if (p.getDepth() != d) {
+                            auxPixlist.add(new Pixbit(p.getPosX(), p.getPosY(), 1, d));
+                        }
+                        else {
+                            auxPixlist.add(new Pixbit(p.getPosX(),p.getPosY(),((Pixbit)p).getBitColor(),p.getDepth()));
+                        }
+                    }
+                    imageList.add(new Bitmap(width,height,auxPixlist));
+                    auxPixlist = new ArrayList<>();
+                }
+                return imageList;
+            }
+            
+            else if (isPixmap()) {
+                for (Pixel p: pixlist) {
+                    if (!depthList.contains(p.getDepth())) {
+                        depthList.add(p.getDepth());
+                    }
+                }
+                for (int d: depthList) {
+                    for (Pixel p: pixlist) {
+                        if (p.getDepth() != d) {
+                            auxPixlist.add(new Pixrgb(p.getPosX(),
+                                    p.getPosY(),255,255,255,d));
+                        }
+                        else {
+                            auxPixlist.add(new Pixrgb(p.getPosX(),
+                                    p.getPosY(),
+                                    ((Pixrgb)p).getRColor(),((Pixrgb)p).getGColor(),
+                                    ((Pixrgb)p).getBColor(), p.getDepth()));
+                        }
+                    }
+                    imageList.add(new Pixmap(width,height,auxPixlist));
+                    auxPixlist = new ArrayList<>();
+                }
+                return imageList;
+            }
+            
+            else if (isHexmap()) {
+                for (Pixel p: pixlist) {
+                    if (!depthList.contains(p.getDepth())) {
+                        depthList.add(p.getDepth());
+                    }
+                }
+                for (int d: depthList) {
+                    for (Pixel p: pixlist) {
+                        if (p.getDepth() != d) {
+                            auxPixlist.add(new Pixhex(p.getPosX(), p.getPosY(), "#FFFFFF", d));
+                        }
+                        else {
+                            auxPixlist.add(new Pixhex(p.getPosX(),p.getPosY(),((Pixhex)p).getHexColor(),p.getDepth()));
+                        }
+                    }
+                    imageList.add(new Hexmap(width,height,auxPixlist));
+                    auxPixlist = new ArrayList<>();
+                }
+                return imageList;
+            }
+        }
+        return null;
     }
     
 }

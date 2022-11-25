@@ -6,10 +6,6 @@ public class Pixmap extends Image {
     
     int[] compressedColor;
 
-    public Pixmap() {
-        this.compressedColor = new int[3];
-    }
-
     public Pixmap(int width, int height, ArrayList<Pixel> pixlist) {
         super(width, height, pixlist);
         this.compressedColor = new int[3];

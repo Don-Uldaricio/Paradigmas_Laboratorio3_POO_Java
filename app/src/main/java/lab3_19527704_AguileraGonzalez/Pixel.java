@@ -6,9 +6,6 @@ public class Pixel {
     int posY;
     int depth;
 
-    public Pixel() {
-    }
-
     public Pixel(int posX, int posY, int depth) {
         this.posX = posX;
         this.posY = posY;

@@ -6,9 +6,6 @@ public class HexHistogram extends Histogram {
     
     ArrayList<String> hexColorList;
 
-    public HexHistogram() {
-    }
-
     public HexHistogram(ArrayList<String> hexColorList, ArrayList<Integer> freqList) {
         super(freqList);
         this.hexColorList = hexColorList;

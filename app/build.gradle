@@ -26,7 +26,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'lab3dos.App'
+    mainClass = 'lab3_19527704_AguileraGonzalez.App'
 }
 
 tasks.named('test') {

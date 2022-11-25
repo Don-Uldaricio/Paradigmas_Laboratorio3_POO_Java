@@ -4,9 +4,6 @@ public class Pixbit extends Pixel {
     
     int bitColor;
 
-    public Pixbit() {
-    }
-
     public Pixbit(int posX, int posY, int bitColor, int depth) {
         super(posX, posY, depth);
         if (bitColor == 0 || bitColor == 1) {

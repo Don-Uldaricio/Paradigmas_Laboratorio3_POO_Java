@@ -4,9 +4,6 @@ public class Pixhex extends Pixel {
     
     String hexColor;
 
-    public Pixhex() {
-    }
-
     public Pixhex(int posX, int posY, String hexColor, int depth) {
         super(posX, posY, depth);
         if (hexColor.charAt(0) == '#' && hexColor.length() == 7) {

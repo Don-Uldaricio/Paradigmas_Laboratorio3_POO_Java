@@ -6,9 +6,6 @@ public class Bitmap extends Image {
     
     int compressedColor;
 
-    public Bitmap() {
-    }
-
     public Bitmap(int width, int height, ArrayList<Pixel> pixlist) {
         super(width, height, pixlist);
     }

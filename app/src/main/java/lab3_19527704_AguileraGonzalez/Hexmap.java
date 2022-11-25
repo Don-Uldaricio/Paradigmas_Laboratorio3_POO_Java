@@ -6,9 +6,6 @@ public class Hexmap extends Image {
     
     String compressedColor;
 
-    public Hexmap() {
-    }
-
     public Hexmap(int width, int height, ArrayList<Pixel> pixlist) {
         super(width, height, pixlist);
     }
