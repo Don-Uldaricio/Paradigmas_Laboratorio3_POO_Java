@@ -1,6 +1,7 @@
 package lab3_19527704_AguileraGonzalez;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class App {
     public String getGreeting() {
@@ -151,6 +152,12 @@ public class App {
                     ((Pixrgb)p).getRgbColor()[2] + " " + p.getDepth());
         }
         
+        System.out.println(img1.imageToString());
+        Pixel paux = new Pixrgb(0,0,40,40,40,3);
+        img1.changePixel(paux);
+        String st = img1.imageToString();
+        System.out.println(st);
+        
         img1.compress();
         System.out.println("isCompressed? " + img1.isCompressed());
         for (Pixel p: img1.getPixlist()) {
@@ -217,8 +224,10 @@ public class App {
         }
         */
         
+        
         Menu menu = new Menu();
         menu.menuExe();
+        
         
     }
 }

@@ -294,7 +294,18 @@ public class Image {
                 for (Pixel auxP: pixlist) {
                     if (auxP.getPosX() == p.getPosX() &&
                         auxP.getPosY() == p.getPosY()) {
-                        auxP = p;
+                        auxP.setDepth(p.getDepth());
+                        if (isBitmap()) {
+                            ((Pixbit)auxP).setBitColor(((Pixbit)p).getBitColor());
+                        }
+                        else if (isPixmap()) {
+                            ((Pixrgb)auxP).setRColor(((Pixrgb)p).getRColor());
+                            ((Pixrgb)auxP).setGColor(((Pixrgb)p).getGColor());
+                            ((Pixrgb)auxP).setBColor(((Pixrgb)p).getBColor());
+                        }
+                        else if (isHexmap()) {
+                            ((Pixhex)auxP).setHexColor(((Pixhex)p).getHexColor());
+                        }
                     }
                 }
             }

@@ -18,8 +18,8 @@ public class Menu {
         int depth;
         String hexColor;
         Image img1 = new Image();
-        Image img2;
         ArrayList<Pixel> pixlist;
+        ArrayList<Image> imageList;
         
         System.out.println("------ MANIPULADOR DE IMÁGENES -----");
         
@@ -32,9 +32,9 @@ public class Menu {
                     displayCreateImageOptions();
                     imageType = sc.nextInt();
                     
-                    System.out.print("Introduzca el ANCHO: ");
+                    System.out.print("Introduzca el ancho: ");
                     width = sc.nextInt();
-                    System.out.print("Introduzca el LARGO: ");
+                    System.out.print("Introduzca el largo: ");
                     height = sc.nextInt();
                     System.out.print("\n");
                     
@@ -81,7 +81,7 @@ public class Menu {
                                 System.out.print("Ingrese posición Y: ");
                                 posY = sc.nextInt();
                                 System.out.print("Ingrese color hexadecimal: ");
-                                hexColor = sc.nextLine();
+                                hexColor = sc.next();
                                 System.out.print("Ingrese la profundidad: ");
                                 depth = sc.nextInt();
                                 pixlist.add(new Pixhex(posX,posY,hexColor,depth));
@@ -91,29 +91,101 @@ public class Menu {
                     }
                     break;
                 case 2:
+                    displayFunctions();
                     opcion = sc.nextInt();
                     switch(opcion) {
                         case 1:
                             img1.flipH();
                             break;
                         case 2:
+                            img1.flipV();
                             break;
                         case 3:
+                            int x1, y1, x2, y2;
+                            System.out.print("Introduzca x1: ");
+                            x1 = sc.nextInt();
+                            System.out.print("Introduzca y1: ");
+                            y1 = sc.nextInt();
+                            System.out.print("Introduzca x2: ");
+                            x2 = sc.nextInt();
+                            System.out.print("Introduzca y2: ");
+                            y2 = sc.nextInt();
+                            img1.crop(x1, y1, x2, y2);
                             break;
                         case 4:
+                            if (img1.isPixmap()) {
+                                img1.imgRGBToHex();
+                            }
+                            else {
+                                System.out.println("Tipo de imagen no corresponde.");
+                            }
                             break;
                         case 5:
+                            img1.rotate90();
                             break;
                         case 6:
+                            img1.compress();
                             break;
                         case 7:
+                            if (img1.isBitmap()) {
+                                System.out.println("Introduzca un Pixbit:");
+                                System.out.print("Ingrese posición X: ");
+                                posX = sc.nextInt();
+                                System.out.print("Ingrese posición Y: ");
+                                posY = sc.nextInt();
+                                System.out.print("Ingrese valor del Bit: ");
+                                bitColor = sc.nextInt();
+                                System.out.print("Ingrese la profundidad: ");
+                                depth = sc.nextInt();
+                                img1.changePixel(new Pixbit(posX,posY,bitColor,depth));
+                            }
+                            else if (img1.isPixmap()) {
+                                System.out.println("Introduzca un Pixrgb:");
+                                System.out.print("Ingrese posición X: ");
+                                posX = sc.nextInt();
+                                System.out.print("Ingrese posición Y: ");
+                                posY = sc.nextInt();
+                                System.out.print("Ingrese canal R: ");
+                                R = sc.nextInt();
+                                System.out.print("Ingrese canal G: ");
+                                G = sc.nextInt();
+                                System.out.print("Ingrese canal B: ");
+                                B = sc.nextInt();
+                                System.out.print("Ingrese la profundidad: ");
+                                depth = sc.nextInt();
+                                img1.changePixel(new Pixrgb(posX,posY,R,G,B,depth));
+                            }
+                            else if (img1.isHexmap()) {
+                                System.out.print("Ingrese posición X: ");
+                                posX = sc.nextInt();
+                                System.out.print("Ingrese posición Y: ");
+                                posY = sc.nextInt();
+                                System.out.print("Ingrese color hexadecimal: ");
+                                hexColor = sc.next();
+                                System.out.print("Ingrese la profundidad: ");
+                                depth = sc.nextInt();
+                                img1.changePixel(new Pixhex(posX,posY,hexColor,depth));
+                            }
                             break;
                         case 8:
+                            if (img1.isBitmap()) {
+                                img1.invertColorBit();
+                            }
+                            else {
+                                System.out.println("Tipo de imagen no corresponde.");
+                            }
                             break;
                         case 9:
+                            if (img1.isPixmap()) {
+                                img1.invertColorRGB();
+                            }
+                            else {
+                                System.out.println("Tipo de imagen no corresponde");
+                            }
                             break;
-                        
-                        
+                        case 10:
+                            imageList = img1.depthLayers();
+                            break;                        
                     }
                     break;
                 case 3:
@@ -159,6 +231,8 @@ public class Menu {
         System.out.println("8. Invertir Bits");
         System.out.println("9. Invertir canales RGB");
         System.out.println("10. Capas de profundidad");
+        
+        System.out.print("Introduzca su opción: ");
     }
     
 }
