@@ -5,18 +5,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Image {
+public class Image implements ImageInterface {
     
     int width;
     int height;
     boolean compressValue;
     ArrayList<Pixel> pixlist;
     ArrayList<ArrayList<Integer>> compressedPixels;
-
-    public Image(){
-        compressValue = false;
-        compressedPixels = new ArrayList<>();
-    }
     
     public Image(int width, int height, ArrayList<Pixel> pixlist) {
         this.width = width;
@@ -46,6 +41,7 @@ public class Image {
         return pixlist;
     }
     
+    @Override
     public boolean isBitmap() {
         for(int i = 0; i < width * height; i++) {
             if (!(pixlist.get(i) instanceof Pixbit)) {
@@ -55,6 +51,7 @@ public class Image {
         return true;
     }
     
+    @Override
     public boolean isPixmap() {
         for(int i = 0; i < width * height; i++) {
             if (!(pixlist.get(i) instanceof Pixrgb)) {
@@ -64,6 +61,7 @@ public class Image {
         return true;
     }
     
+    @Override
     public boolean isHexmap() {
         for(int i = 0; i < width * height; i++) {
             if (!(pixlist.get(i) instanceof Pixhex)) {
@@ -73,10 +71,12 @@ public class Image {
         return true;
     }
     
+    @Override
     public boolean isCompressed() {
         return compressValue;
     }
     
+    @Override
     public void flipH() {
         if (! isCompressed()) {
             for (Pixel p: pixlist) {
@@ -85,6 +85,7 @@ public class Image {
         }
     }
     
+    @Override
     public void flipV() {
         if (! isCompressed()) {
             for (Pixel p: pixlist) {
@@ -93,6 +94,7 @@ public class Image {
         }
     }
     
+    @Override
     public void crop(int x1, int y1, int x2, int y2) {
         if (! isCompressed()) {
             int i = 0;
@@ -119,6 +121,7 @@ public class Image {
         }
     }
     
+    @Override
     public Image imgRGBToHex() {
         if (! isCompressed()) {
             if (isPixmap()) {
@@ -135,6 +138,7 @@ public class Image {
         return null;
     }
     
+    @Override
     public Histogram histogram() {
         if (! isCompressed()) {
             Histogram h;
@@ -201,6 +205,7 @@ public class Image {
         return null;
     }
     
+    @Override
     public void rotate90() {
         int aux;
         for (Pixel p: pixlist) {
@@ -213,6 +218,7 @@ public class Image {
         height = aux;
     }
     
+    @Override
     public void compress() {
         if (!isCompressed()) {
             int c = 0;
@@ -286,6 +292,7 @@ public class Image {
         }
     }
     
+    @Override
     public void changePixel(Pixel p) {
         if (!isCompressed()) {
             if ((p instanceof Pixbit && isBitmap()) ||
@@ -312,6 +319,7 @@ public class Image {
         }
     }
     
+    @Override
     public void invertColorBit() {
         if (!isCompressed()) {
             if (isBitmap()) {
@@ -327,6 +335,7 @@ public class Image {
         }
     }
     
+    @Override
     public void invertColorRGB() {
         if (!isCompressed()) {
             if (isPixmap()) {
@@ -349,11 +358,13 @@ public class Image {
     Comparator<Pixel> compareByPosY = (Pixel p1, Pixel p2) -> 
         Integer.compare(p1.getPosY(), p2.getPosY());
     
+    @Override
     public void sortPixlist() {
         Collections.sort(pixlist, compareByPosX);
         Collections.sort(pixlist, compareByPosY);
     }
     
+    @Override
     public String imageToString() {
         if (!isCompressed()) {
             String imageString = "";
@@ -406,6 +417,7 @@ public class Image {
         return null;
     }
     
+    @Override
     public ArrayList<Image> depthLayers() {
         if (!isCompressed()) {
             ArrayList<Image> imageList = new ArrayList<>();

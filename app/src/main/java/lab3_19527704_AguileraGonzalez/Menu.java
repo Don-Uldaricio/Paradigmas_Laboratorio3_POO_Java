@@ -17,13 +17,14 @@ public class Menu {
         int R, G, B;
         int depth;
         String hexColor;
-        Image img1 = new Image();
+        Image img1 = pixmapPreCreated();
         ArrayList<Pixel> pixlist;
         ArrayList<Image> imageList;
         
-        System.out.println("------ MANIPULADOR DE IMÁGENES -----");
+        System.out.println("------ MANIPULADOR DE IMÁGENES -----\n");
         
         while(!salir){
+            System.out.println("\nImage Actual: " + currentImage(img1));
             displayMenuOptions();
             opcion = sc.nextInt();
             switch(opcion){
@@ -93,6 +94,7 @@ public class Menu {
                 case 2:
                     displayFunctions();
                     opcion = sc.nextInt();
+                    System.out.print("\n");
                     switch(opcion) {
                         case 1:
                             img1.flipH();
@@ -114,7 +116,7 @@ public class Menu {
                             break;
                         case 4:
                             if (img1.isPixmap()) {
-                                img1.imgRGBToHex();
+                                img1 = img1.imgRGBToHex();
                             }
                             else {
                                 System.out.println("Tipo de imagen no corresponde.");
@@ -185,6 +187,10 @@ public class Menu {
                             break;
                         case 10:
                             imageList = img1.depthLayers();
+                            for (Image image: imageList) {
+                                System.out.println("Imagen profundidad " + image.getPixlist().get(0).getDepth() + ":");
+                                System.out.println(image.imageToString());
+                            }
                             break;                        
                     }
                     break;
@@ -202,8 +208,8 @@ public class Menu {
     }
     
     public void displayMenuOptions() {
-        System.out.println("1. Crear una imagen");
-        System.out.println("2. Modificar una imagen");
+        System.out.println("1. Crear imagen");
+        System.out.println("2. Modificar imagen");
         System.out.println("3. Visualizar imagen");
         System.out.println("4. Salir\n");
 
@@ -220,7 +226,7 @@ public class Menu {
     }
     
     public void displayFunctions() {
-        System.out.println("Selecciona la modificación a realizar: ");
+        System.out.println("\nSelecciona la modificación a realizar: ");
         System.out.println("1. Voltear Horizontalmente");
         System.out.println("2. Voltear Verticalmente");
         System.out.println("3. Recortar");
@@ -234,5 +240,39 @@ public class Menu {
         
         System.out.print("Introduzca su opción: ");
     }
+    
+    public String currentImage(Image i) {
+        if (i.isBitmap()) {
+            return "Bitmap de " + i.getWidth() + "x" + i.getHeight();
+        }
+        else if (i.isPixmap()) {
+            return "Pixmap de " + i.getWidth() + "x" + i.getHeight();
+        }
+        else if (i.isHexmap()) {
+            return "Hexmap de " + i.getWidth() + "x" + i.getHeight();
+        }
+        return "";
+    }
+    
+    public Image pixmapPreCreated() {
+        Pixel p1 = new Pixrgb(0,0,20,200,120,6);
+        Pixel p2 = new Pixrgb(0,1,45,20,20,4);
+        Pixel p3 = new Pixrgb(1,0,20,200,120,4);
+        Pixel p4 = new Pixrgb(1,1,20,200,120,2);
+        Pixel p5 = new Pixrgb(2,0,20,200,120,6);
+        Pixel p6 = new Pixrgb(2,1,45,20,20,2);
+        
+        ArrayList<Pixel> pixlist = new ArrayList<>();
+        pixlist.add(p1);
+        pixlist.add(p2);
+        pixlist.add(p3);
+        pixlist.add(p4);
+        pixlist.add(p5);
+        pixlist.add(p6);
+        
+        Image img1 = new Pixmap(3,2,pixlist);
+        return img1;
+    }
+    
     
 }
