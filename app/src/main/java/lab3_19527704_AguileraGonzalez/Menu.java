@@ -199,7 +199,41 @@ public class Menu {
                                 System.out.println("Imagen profundidad " + image.getPixlist().get(0).getDepth() + ":");
                                 System.out.println(image.imageToString());
                             }
-                            break;                        
+                            break;
+                        case 11:
+                            if (img1.isBitmap()){
+                                System.out.println("La imagen es Bitmap");
+                            }
+                            else {
+                                System.out.println("La imagen NO es Bitmap");
+                            }
+                            break;
+                        case 12:
+                            if (img1.isPixmap()){
+                                System.out.println("La imagen es Pixmap");
+                            }
+                            else {
+                                System.out.println("La imagen NO es Pixmap");
+                            }
+                            break;
+                        case 13:
+                            if (img1.isHexmap()){
+                                System.out.println("La imagen es Hexmap");
+                            }
+                            else {
+                                System.out.println("La imagen NO es Hexmap");
+                            }
+                            break;
+                        case 14:
+                            if (img1.isCompressed()){
+                                System.out.println("La imagen está comprimida");
+                            }
+                            else {
+                                System.out.println("La imagen NO está comprimida");
+                            }
+                            break;
+                        case 15:
+                            break;
                     }
                     break;
                 case 3:
@@ -254,6 +288,11 @@ public class Menu {
         System.out.println("8. Invertir Bits");
         System.out.println("9. Invertir canales RGB");
         System.out.println("10. Capas de profundidad");
+        System.out.println("11. Verificar Bitmap");
+        System.out.println("12. Verificar Pixmap");
+        System.out.println("13. Verificar Hexmap");
+        System.out.println("14. Verificar Compresión");
+        System.out.println("\n15. Volver a Menú Principal\n");
         
         System.out.print("Introduzca su opción: ");
     }
