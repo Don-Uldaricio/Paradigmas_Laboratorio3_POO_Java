@@ -3,8 +3,16 @@ package lab3_19527704_AguileraGonzalez;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Representa un Menu interactivo donde el usuario puede crear, modificar
+ * y visualizar imágenes de cualquier tipo
+ * @author Nicolás Aguilera González
+ */
 public class Menu {
     
+    /**
+     * Método principal del Menu que permite elegir diferentes opciones
+     */
     public void menuExe() {
         
         Scanner sc = new Scanner(System.in);
@@ -207,6 +215,9 @@ public class Menu {
         System.out.println("Has salido.");
     }
     
+    /**
+     * Imprime en pantalla una serie de opciones
+     */
     public void displayMenuOptions() {
         System.out.println("1. Crear imagen");
         System.out.println("2. Modificar imagen");
@@ -216,6 +227,9 @@ public class Menu {
         System.out.print("Introduzca su opción: ");
     }
     
+    /**
+     * Imprime en pantalla opciones para crear imagen
+     */
     public void displayCreateImageOptions() {
         System.out.println("Elija el tipo de imagen que desea crear:");
         System.out.println("1. Bitmap");
@@ -225,6 +239,9 @@ public class Menu {
         System.out.print("Introduzca su opción: ");
     }
     
+    /**
+     * Imprime en pantalla opciones para modificar una imagen
+     */
     public void displayFunctions() {
         System.out.println("\nSelecciona la modificación a realizar: ");
         System.out.println("1. Voltear Horizontalmente");
@@ -241,6 +258,11 @@ public class Menu {
         System.out.print("Introduzca su opción: ");
     }
     
+    /**
+     * Imprime en pantalla tipo de imagen y dimensiones de esta
+     * @param i Imagen de cualquier tipo
+     * @return String que indica tipo de imagen
+     */
     public String currentImage(Image i) {
         if (i.isBitmap()) {
             return "Bitmap de " + i.getWidth() + "x" + i.getHeight();
@@ -254,21 +276,22 @@ public class Menu {
         return "";
     }
     
+    /**
+     * Crea una imagen de tipo Pixmap para que la interfaz tenga una
+     * precargada y facilitar el uso del menu
+     * @return Imagen tipo Pixmap
+     */
     public Image pixmapPreCreated() {
         Pixel p1 = new Pixrgb(0,0,20,200,120,6);
         Pixel p2 = new Pixrgb(0,1,45,20,20,4);
         Pixel p3 = new Pixrgb(1,0,20,200,120,4);
         Pixel p4 = new Pixrgb(1,1,20,200,120,2);
-        Pixel p5 = new Pixrgb(2,0,20,200,120,6);
-        Pixel p6 = new Pixrgb(2,1,45,20,20,2);
+        Pixel p5 = new Pixrgb(2,0,60,180,100,6);
+        Pixel p6 = new Pixrgb(2,1,70,23,67,2);
         
         ArrayList<Pixel> pixlist = new ArrayList<>();
-        pixlist.add(p1);
-        pixlist.add(p2);
-        pixlist.add(p3);
-        pixlist.add(p4);
-        pixlist.add(p5);
-        pixlist.add(p6);
+        pixlist.add(p1); pixlist.add(p2); pixlist.add(p3);
+        pixlist.add(p4); pixlist.add(p5); pixlist.add(p6);
         
         Image img1 = new Pixmap(3,2,pixlist);
         return img1;

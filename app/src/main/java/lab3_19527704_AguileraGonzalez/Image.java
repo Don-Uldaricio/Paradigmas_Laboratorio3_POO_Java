@@ -5,6 +5,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Representa una Imagen, contiene ancho, alto, lista de pixeles, 
+ * un valor de compresión y una lista de pixeles comprimidos.
+ * @author Nicolas Aguilera Gonzalez
+ */
 public class Image implements ImageInterface {
     
     int width;
@@ -13,6 +18,12 @@ public class Image implements ImageInterface {
     ArrayList<Pixel> pixlist;
     ArrayList<ArrayList<Integer>> compressedPixels;
     
+    /**
+     * Crea una instancia de la clase Imagen
+     * @param width Ancho de la imagen
+     * @param height Alto de la imagen
+     * @param pixlist Lista de pixeles
+     */
     public Image(int width, int height, ArrayList<Pixel> pixlist) {
         this.width = width;
         this.height = height;
@@ -21,26 +32,50 @@ public class Image implements ImageInterface {
         compressedPixels = new ArrayList<>();
     }
     
+    /**
+     * Retorna el ancho de la imagen
+     * @return width, el ancho de la imagen
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Establece un valor para el ancho de la imagen
+     * @param width Nuevo valor para el ancho de la imagen
+     */
     public void setWidth(int width) {
         this.width = width;
     }
 
+    /**
+     * Retorna el alto de la imagen
+     * @return height, el alto de la imagen
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Establece un nuevo valor para el alto de la imagen
+     * @param height Valor para el alto de la imagen
+     */
     public void setHeight(int height) {
         this.height = height;
     }
 
+    /**
+     * Entrega la lista de pixeles de la imagen
+     * @return Lista de pixeles de tipo Pixbit, Pixrgb o Pixhex
+     */
     public ArrayList<Pixel> getPixlist() {
         return pixlist;
     }
     
+    /**
+     * Verifica si la imagen es de tipo Bitmap
+     * @return Booleano
+     */
     @Override
     public boolean isBitmap() {
         for(int i = 0; i < width * height; i++) {
@@ -51,6 +86,10 @@ public class Image implements ImageInterface {
         return true;
     }
     
+    /**
+     * Verifica si la imagen es de tipo Pixmap
+     * @return Booleano
+     */
     @Override
     public boolean isPixmap() {
         for(int i = 0; i < width * height; i++) {
@@ -61,6 +100,10 @@ public class Image implements ImageInterface {
         return true;
     }
     
+    /**
+     * Verifica si la imagen es de tipo Hexmap
+     * @return Booleano
+     */
     @Override
     public boolean isHexmap() {
         for(int i = 0; i < width * height; i++) {
@@ -71,11 +114,18 @@ public class Image implements ImageInterface {
         return true;
     }
     
+    /**
+     * Verifica si la imagen está comprimida
+     * @return Booleano
+     */
     @Override
     public boolean isCompressed() {
         return compressValue;
     }
     
+    /**
+     * Voltea la imagen horizontalmente cambiando los pixeles de lugar
+     */
     @Override
     public void flipH() {
         if (! isCompressed()) {
@@ -85,6 +135,9 @@ public class Image implements ImageInterface {
         }
     }
     
+    /**
+     * Voltea la imagen verticalmente cambiando los pixeles de lugar
+     */
     @Override
     public void flipV() {
         if (! isCompressed()) {
@@ -94,6 +147,14 @@ public class Image implements ImageInterface {
         }
     }
     
+    /**
+     * Recorta una imagen según un cuadrante definido por los parámetros
+     * de entrada que representan coordenadas de la imagen
+     * @param x1 Primera coordenada x
+     * @param y1 Primera coordenada y
+     * @param x2 Segunda coordenada x
+     * @param y2 Segunda coordenada y
+     */
     @Override
     public void crop(int x1, int y1, int x2, int y2) {
         if (! isCompressed()) {
@@ -121,6 +182,10 @@ public class Image implements ImageInterface {
         }
     }
     
+    /**
+     * Transforma una imagen de tipo Pixmap a una Hexmap con Pixhex
+     * @return Imagen de tipo Hexmap
+     */
     @Override
     public Image imgRGBToHex() {
         if (! isCompressed()) {
@@ -138,6 +203,10 @@ public class Image implements ImageInterface {
         return null;
     }
     
+    /**
+     * Entrega el histograma de la imagen, con sus colores y frecuencias
+     * @return Histograma de tipo Bit, Pix o Hex
+     */
     @Override
     public Histogram histogram() {
         if (! isCompressed()) {
@@ -205,6 +274,9 @@ public class Image implements ImageInterface {
         return null;
     }
     
+    /**
+     * Rota una imagen en 90 grados en sentido horario
+     */
     @Override
     public void rotate90() {
         int aux;
@@ -218,6 +290,10 @@ public class Image implements ImageInterface {
         height = aux;
     }
     
+    /**
+     * Comprime una imagen eliminando los pixeles que tengan el color
+     * más frecuente de esta
+     */
     @Override
     public void compress() {
         if (!isCompressed()) {
@@ -292,6 +368,11 @@ public class Image implements ImageInterface {
         }
     }
     
+    /**
+     * Cambia el pixel de una imagen dependiendo el tipo de esta,
+     * según la posición X e Y del pixel entregado como parámetro
+     * @param p Pixel de tipo Pixbit, Pixrgb o Pixhex
+     */
     @Override
     public void changePixel(Pixel p) {
         if (!isCompressed()) {
@@ -319,6 +400,9 @@ public class Image implements ImageInterface {
         }
     }
     
+    /**
+     * Invierte los canales de bit de cada pixel de una imagen Bitmap
+     */
     @Override
     public void invertColorBit() {
         if (!isCompressed()) {
@@ -335,6 +419,9 @@ public class Image implements ImageInterface {
         }
     }
     
+    /**
+     * Invierte los canales RGB de cada pixel de una imagen Pixmap
+     */
     @Override
     public void invertColorRGB() {
         if (!isCompressed()) {
@@ -358,12 +445,19 @@ public class Image implements ImageInterface {
     Comparator<Pixel> compareByPosY = (Pixel p1, Pixel p2) -> 
         Integer.compare(p1.getPosY(), p2.getPosY());
     
+    /**
+     * Ordena la lista de pixeles según posición X y luego Y
+     */
     @Override
     public void sortPixlist() {
         Collections.sort(pixlist, compareByPosX);
         Collections.sort(pixlist, compareByPosY);
     }
     
+    /**
+     * Crea un String que sirve para visualizar la imagen
+     * @return String que contiene los pixeles de la imagen
+     */
     @Override
     public String imageToString() {
         if (!isCompressed()) {
@@ -417,6 +511,11 @@ public class Image implements ImageInterface {
         return null;
     }
     
+    /**
+     * Crea una lista de imágenes donde cada una de estas comparte
+     * la misma profundidad para todos sus pixeles
+     * @return Lista de imagenes
+     */
     @Override
     public ArrayList<Image> depthLayers() {
         if (!isCompressed()) {
