@@ -51,9 +51,9 @@ public class Menu_19527704_AguileraGonzalez {
                         case 1:
                             for (int j=0; j < (width*height); j++) {
                                 System.out.println("Pixel N°" + (j+1));
-                                System.out.print("Ingrese posición X: ");
+                                System.out.print("Ingrese posicion X: ");
                                 posX = sc.nextInt();
-                                System.out.print("Ingrese posición Y: ");
+                                System.out.print("Ingrese posicion Y: ");
                                 posY = sc.nextInt();
                                 System.out.print("Ingrese valor del Bit: ");
                                 bitColor = sc.nextInt();
@@ -62,14 +62,14 @@ public class Menu_19527704_AguileraGonzalez {
                                 pixlist.add(new Pixbit_19527704_AguileraGonzalez(posX,posY,bitColor,depth));
                             }
                             img1 = new Bitmap_19527704_AguileraGonzalez(width,height,pixlist);
-                            System.out.println("Imagen creada con éxito!");
+                            System.out.println("Imagen creada con exito!");
                             break;
                         case 2:
                             for (int j=0; j < (width*height); j++) {
                                 System.out.println("Pixel N°" + (j+1));
-                                System.out.print("Ingrese posición X: ");
+                                System.out.print("Ingrese posicion X: ");
                                 posX = sc.nextInt();
-                                System.out.print("Ingrese posición Y: ");
+                                System.out.print("Ingrese posicion Y: ");
                                 posY = sc.nextInt();
                                 System.out.print("Ingrese canal R: ");
                                 R = sc.nextInt();
@@ -82,14 +82,14 @@ public class Menu_19527704_AguileraGonzalez {
                                 pixlist.add(new Pixrgb_19527704_AguileraGonzalez(posX,posY,R,G,B,depth));
                             }
                             img1 = new Pixmap_19527704_AguileraGonzalez(width,height,pixlist);
-                            System.out.println("Imagen creada con éxito!");
+                            System.out.println("Imagen creada con exito!");
                             break;
                         case 3:
                             for (int j=0; j < (width*height); j++) {
                                 System.out.println("Pixel N°" + (j+1));
-                                System.out.print("Ingrese posición X: ");
+                                System.out.print("Ingrese posicion X: ");
                                 posX = sc.nextInt();
-                                System.out.print("Ingrese posición Y: ");
+                                System.out.print("Ingrese posicion Y: ");
                                 posY = sc.nextInt();
                                 System.out.print("Ingrese color hexadecimal: ");
                                 hexColor = sc.next();
@@ -98,7 +98,7 @@ public class Menu_19527704_AguileraGonzalez {
                                 pixlist.add(new Pixhex_19527704_AguileraGonzalez(posX,posY,hexColor,depth));
                             }
                             img1 = new Hexmap_19527704_AguileraGonzalez(width,height,pixlist);
-                            System.out.println("Imagen creada con éxito!");
+                            System.out.println("Imagen creada con exito!");
                             break;
                     }
                     break;
@@ -109,11 +109,11 @@ public class Menu_19527704_AguileraGonzalez {
                     switch(opcion) {
                         case 1:
                             img1.flipH();
-                            System.out.println("Acción realizada exitosamente.");
+                            System.out.println("Accion realizada exitosamente.");
                             break;
                         case 2:
                             img1.flipV();
-                            System.out.println("Acción realizada exitosamente.");
+                            System.out.println("Accion realizada exitosamente.");
                             break;
                         case 3:
                             int x1, y1, x2, y2;
@@ -126,12 +126,12 @@ public class Menu_19527704_AguileraGonzalez {
                             System.out.print("Introduzca y2: ");
                             y2 = sc.nextInt();
                             img1.crop(x1, y1, x2, y2);
-                            System.out.println("Acción realizada exitosamente.");
+                            System.out.println("Accion realizada exitosamente.");
                             break;
                         case 4:
                             if (img1.isPixmap()) {
                                 img1 = img1.imgRGBToHex();
-                                System.out.println("Acción realizada exitosamente.");
+                                System.out.println("Accion realizada exitosamente.");
                             }
                             else {
                                 System.out.println("Tipo de imagen no corresponde.");
@@ -143,27 +143,27 @@ public class Menu_19527704_AguileraGonzalez {
                             break;
                         case 6:
                             img1.compress();
-                            System.out.println("Acción realizada exitosamente.");
+                            System.out.println("Accion realizada exitosamente.");
                             break;
                         case 7:
                             if (img1.isBitmap()) {
                                 System.out.println("Introduzca un Pixbit:");
-                                System.out.print("Ingrese posición X: ");
+                                System.out.print("Ingrese posicion X: ");
                                 posX = sc.nextInt();
-                                System.out.print("Ingrese posición Y: ");
+                                System.out.print("Ingrese posicion Y: ");
                                 posY = sc.nextInt();
                                 System.out.print("Ingrese valor del Bit: ");
                                 bitColor = sc.nextInt();
                                 System.out.print("Ingrese la profundidad: ");
                                 depth = sc.nextInt();
                                 img1.changePixel(new Pixbit_19527704_AguileraGonzalez(posX,posY,bitColor,depth));
-                                System.out.println("Acción realizada exitosamente.");
+                                System.out.println("Accion realizada exitosamente.");
                             }
                             else if (img1.isPixmap()) {
                                 System.out.println("Introduzca un Pixrgb:");
-                                System.out.print("Ingrese posición X: ");
+                                System.out.print("Ingrese posicion X: ");
                                 posX = sc.nextInt();
-                                System.out.print("Ingrese posición Y: ");
+                                System.out.print("Ingrese posicion Y: ");
                                 posY = sc.nextInt();
                                 System.out.print("Ingrese canal R: ");
                                 R = sc.nextInt();
@@ -174,25 +174,25 @@ public class Menu_19527704_AguileraGonzalez {
                                 System.out.print("Ingrese la profundidad: ");
                                 depth = sc.nextInt();
                                 img1.changePixel(new Pixrgb_19527704_AguileraGonzalez(posX,posY,R,G,B,depth));
-                                System.out.println("Acción realizada exitosamente.");
+                                System.out.println("Accion realizada exitosamente.");
                             }
                             else if (img1.isHexmap()) {
-                                System.out.print("Ingrese posición X: ");
+                                System.out.print("Ingrese posicion X: ");
                                 posX = sc.nextInt();
-                                System.out.print("Ingrese posición Y: ");
+                                System.out.print("Ingrese posicion Y: ");
                                 posY = sc.nextInt();
                                 System.out.print("Ingrese color hexadecimal: ");
                                 hexColor = sc.next();
                                 System.out.print("Ingrese la profundidad: ");
                                 depth = sc.nextInt();
                                 img1.changePixel(new Pixhex_19527704_AguileraGonzalez(posX,posY,hexColor,depth));
-                                System.out.println("Acción realizada exitosamente.");
+                                System.out.println("Accion realizada exitosamente.");
                             }
                             break;
                         case 8:
                             if (img1.isBitmap()) {
                                 img1.invertColorBit();
-                                System.out.println("Acción realizada exitosamente.");
+                                System.out.println("Accion realizada exitosamente.");
                             }
                             else {
                                 System.out.println("Tipo de imagen no corresponde.");
@@ -201,7 +201,7 @@ public class Menu_19527704_AguileraGonzalez {
                         case 9:
                             if (img1.isPixmap()) {
                                 img1.invertColorRGB();
-                                System.out.println("Acción realizada exitosamente.");
+                                System.out.println("Accion realizada exitosamente.");
                             }
                             else {
                                 System.out.println("Tipo de imagen no corresponde");
@@ -240,10 +240,10 @@ public class Menu_19527704_AguileraGonzalez {
                             break;
                         case 14:
                             if (img1.isCompressed()){
-                                System.out.println("La imagen está comprimida");
+                                System.out.println("La imagen esta comprimida");
                             }
                             else {
-                                System.out.println("La imagen NO está comprimida");
+                                System.out.println("La imagen NO esta comprimida");
                             }
                             break;
                         case 15:
@@ -257,7 +257,7 @@ public class Menu_19527704_AguileraGonzalez {
                     salir = true;
                     break;
                 default:
-                    System.out.println("La opción es incorrecta\n");
+                    System.out.println("La opcion es incorrecta\n");
             }
         }
         System.out.println("Has salido.");
@@ -272,7 +272,7 @@ public class Menu_19527704_AguileraGonzalez {
         System.out.println("3. Visualizar imagen");
         System.out.println("4. Salir\n");
 
-        System.out.print("Introduzca su opción: ");
+        System.out.print("Introduzca su opcion: ");
     }
     
     /**
@@ -284,14 +284,14 @@ public class Menu_19527704_AguileraGonzalez {
         System.out.println("2. Pixmap");
         System.out.println("3. Hexmap");
 
-        System.out.print("Introduzca su opción: ");
+        System.out.print("Introduzca su opcion: ");
     }
     
     /**
      * Imprime en pantalla opciones para modificar una imagen
      */
     public void displayFunctions() {
-        System.out.println("\nSelecciona la modificación a realizar: ");
+        System.out.println("\nSelecciona la modificacion a realizar: ");
         System.out.println("1. Voltear Horizontalmente");
         System.out.println("2. Voltear Verticalmente");
         System.out.println("3. Recortar");
@@ -305,10 +305,10 @@ public class Menu_19527704_AguileraGonzalez {
         System.out.println("11. Verificar Bitmap");
         System.out.println("12. Verificar Pixmap");
         System.out.println("13. Verificar Hexmap");
-        System.out.println("14. Verificar Compresión");
+        System.out.println("14. Verificar Compresion");
         System.out.println("\n15. Volver a Menú Principal\n");
         
-        System.out.print("Introduzca su opción: ");
+        System.out.print("Introduzca su opcion: ");
     }
     
     /**
@@ -349,6 +349,5 @@ public class Menu_19527704_AguileraGonzalez {
         Image_19527704_AguileraGonzalez img1 = new Pixmap_19527704_AguileraGonzalez(3,2,pixlist);
         return img1;
     }
-    
     
 }
