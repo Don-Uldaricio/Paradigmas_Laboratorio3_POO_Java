@@ -29,7 +29,7 @@ public class Menu_19527704_AguileraGonzalez {
         ArrayList<Pixel_19527704_AguileraGonzalez> pixlist;
         ArrayList<Image_19527704_AguileraGonzalez> imageList;
         
-        System.out.println("------ MANIPULADOR DE IMÁGENES -----\n");
+        System.out.println("------ MANIPULADOR DE IMAGENES -----\n");
         
         while(!salir){
             System.out.println("\nImage Actual: " + currentImage(img1));
